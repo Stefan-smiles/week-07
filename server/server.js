@@ -14,6 +14,18 @@ app.get("/", (request, response) => {
   response.json("this is the routenest toutenest route since route 66");
 });
 
+app.post("/jokes", async function (request, response) {
+  const setup = request.body.setup;
+  const punchline = request.body.punchline;
+  const category = request.body.category;
+  const username = request.body.username;
+  const result = await db.query(
+    "INSERT INTO jokes (setup, punchline, category_id, user_id) VALUES ($1, $2, $3, $4)",
+    [setup, punchline, category, username]
+  );
+  response.json("woohoo!");
+});
+
 app.get("/jokes", async function (request, response) {
   const result = await db.query(`
         SELECT 
